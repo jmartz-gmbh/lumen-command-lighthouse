@@ -1,5 +1,5 @@
 {
-    "name": "jonathan-martz/lumen-command-lighthouse",
+    "name": "jmartz-gmbh/lumen-command-lighthouse",
     "description": "Command for Lighthouse",
     "type": "lumen-command",
     "license": "MIT",
