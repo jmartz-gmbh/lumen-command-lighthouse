@@ -34,6 +34,20 @@ class LighthouseImportCommand extends Command
 
     public function handle(Request $request)
     {
-        echo 'Hallo';
+        $storage = storage_path().'/reports';
+        $dir = scandir($storage);
+        $result = [];
+
+        foreach ($dir as $key => $filename) {
+            if($filename != '..' && $filename != '.'){
+                $score = 0;
+                $json = file_get_contents($storage.'/'.$filename);
+                $data = json_decode($json, true);
+                foreach($data['audits'] as $key => $audit){
+                    $score += $audit['score'];
+                }
+                $result[str_replace('.json','',$filename)] = $score;
+            }
+        }
     }
 }
