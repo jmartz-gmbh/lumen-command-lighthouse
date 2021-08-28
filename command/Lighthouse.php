@@ -32,21 +32,27 @@ class LighthouseImportCommand extends Command
         parent::__construct();
     }
 
+    public function importReport($json){
+        var_dump(DB::table('reports')->get());
+        die();
+    }
+
     public function handle(Request $request)
     {
-        $storage = storage_path().'/reports';
-        $dir = scandir($storage);
-        $result = [];
+        $filename['websites'] = '../../../../www.lighthouse-report.de/shared/websites.json';
+        $foldername['reports'] = '../../../../www.lighthouse-report.de/shared/reports';
+        $website = file_get_contents($filename['websites']);
+        $reports = scandir($foldername['reports']);
 
-        foreach ($dir as $key => $filename) {
-            if($filename != '..' && $filename != '.'){
-                $score = 0;
-                $json = file_get_contents($storage.'/'.$filename);
-                $data = json_decode($json, true);
-                foreach($data['audits'] as $key => $audit){
-                    $score += $audit['score'];
+        foreach (scandir($foldername['reports']) as $key => $folder) {
+            if ($folder != '.' && $folder != '..') {
+                foreach (scandir($foldername['reports'] . '/' . $folder) as $index => $report) {
+                    if ($report != '.' && $report != '..') {
+                        $file = file_get_contents($foldername['reports'] . '/' . $folder.'/'.$report);
+                        $this->importReport($file);
+                        // var_dump($file);
+                    }
                 }
-                $result[str_replace('.json','',$filename)] = $score;
             }
         }
     }
