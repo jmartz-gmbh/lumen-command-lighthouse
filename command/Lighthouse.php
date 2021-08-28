@@ -42,16 +42,23 @@ class LighthouseImportCommand extends Command
             "url" => $data['finalUrl'],
             "hash" => $hash
         ]);
-        $report = DB::table('reports')->where('created_at','=','$timestamp')->where('url','=',$data['finalUrl'])->first();
-        $this->importReportItems($json, $report['id']);
+        $report = (array) DB::table('reports')->where('created_at','=',$timestamp)->where('url','=',$data['finalUrl'])->first();
+        $this->importReportItems($json, $report['id'],$hash);
     }
 
-    public function importReportItems($json, $id)
+    public function importReportItems($json, $id,$hash)
     {
         $data = json_decode($json, true);
         foreach ($data['audits'] as $key => $audit) {
+            $items = DB::table('reports_items');
+            $timestamp = date('Y-m-d H:i:s');
+            $items->insert([
+                "created_at" => $timestamp,
+                "hash" => $hash,
+                "type" => $audit['id'],
+                "json" => json_encode($audit)
+            ]);
             var_dump($audit);
-            var_dump($id);
             die();
         }
     }
@@ -69,7 +76,7 @@ class LighthouseImportCommand extends Command
                     if ($report != '.' && $report != '..') {
                         $filename['report'] = $foldername['reports'] . '/' . $folder . '/' . $report;
                         $file = file_get_contents($filename['report']);
-                        $this->importReport($file, sha1($filename['report']));
+                        $this->importReport($file, sha1($folder . '/' . $report));
                         
                         // var_dump($file);
                     }
