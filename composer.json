@@ -4,10 +4,10 @@
     "type": "lumen-command",
     "license": "MIT",
     "require": {
-        "php": "^7.3|^7.4",
-        "illuminate/http": "^7.3",
-        "illuminate/support": "^7.3",
-        "illuminate/database": "^7.3"
+        "php": "^8.0",
+        "illuminate/http": "^8.0",
+        "illuminate/support": "^8.0",
+        "illuminate/database": "^8.40.0"
     },
     "autoload": {
         "classmap": [
