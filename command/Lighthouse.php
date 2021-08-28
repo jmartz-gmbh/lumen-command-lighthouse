@@ -80,6 +80,7 @@ class LighthouseImportCommand extends Command
                         $filename['report'] = $foldername['reports'] . '/' . $folder . '/' . $report;
                         $file = file_get_contents($filename['report']);
                         $this->importReport($file, sha1($folder . '/' . $report));
+                        exec('rm '.$filename['report']);
                     }
                 }
             }
