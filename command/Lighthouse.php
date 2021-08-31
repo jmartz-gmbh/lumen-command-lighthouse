@@ -61,6 +61,7 @@ class LighthouseImportCommand extends Command
                 "created_at" => $timestamp,
                 "hash" => $hash,
                 "type" => $audit['id'],
+                "score" => $audit['score'],
                 "json" => json_encode($audit)
             ]);
         }
