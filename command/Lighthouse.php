@@ -55,7 +55,7 @@ class LighthouseImportCommand extends Command
 
         $data = json_decode($json, true);
         foreach ($data['audits'] as $key => $audit) {
-            $items = DB::table('reports_items');
+            $items = DB::table('report_items');
             $timestamp = date('Y-m-d H:i:s');
             $items->insert([
                 "created_at" => $timestamp,
