@@ -41,7 +41,7 @@ class LighthouseImportCommand extends Command
         if ($report->count() === 0) {
             $reports->insert([
                 "created_at" => $timestamp,
-                "url" => $data['finalUrl'],
+                "url" => $data['requestedUrl'],
                 "hash" => $hash
             ]);
             $report = (array) DB::table('reports')->where('created_at', '=', $timestamp)->where('url', '=', $data['finalUrl'])->first();
